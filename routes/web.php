@@ -39,3 +39,9 @@ Route::get('/statuses', 'StatusController@index');
 Route::post('/statuses', 'StatusController@store');
 Route::put('/statuses/{status}', 'StatusController@update');
 Route::delete('/statuses/{status}', 'StatusController@destroy');
+
+/** Response REST actions */
+Route::get('/responses', 'ResponseController@index');
+Route::post('/responses', 'ResponseController@store');
+Route::put('/responses/{response}', 'ResponseController@update');
+Route::delete('/responses/{response}', 'ResponseController@destroy');
