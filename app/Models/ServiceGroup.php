@@ -14,4 +14,11 @@ class ServiceGroup extends Model
     public function services() {
         return $this->belongsToMany(Service::class, 'service_group_assignments', 'service_group', 'service');
     }
+
+    public function resetStatus() {
+        $services = $this->services();
+        foreach($services as $service) {
+            $service->resetStatus();
+        }
+    }
 }

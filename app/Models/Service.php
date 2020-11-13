@@ -22,4 +22,13 @@ class Service extends Model
     public function groups() {
         return $this->belongsToMany(ServiceGroup::class, 'service_group_assignments', 'service', 'service_group');
     }
+
+    public function events() {
+        return $this->belongsToMany(Event::class);
+    }
+
+    public function resetStatus() {
+        $this->current_status_id = $this->default_status_id;
+        $this->save();
+    }
 }

@@ -38,7 +38,7 @@ class ServiceGroupTest extends TestCase
         $service = Service::factory()->create();
         $serviceGroup = ServiceGroup::factory()->create();
 
-        $this->post('/servicegroups/' . $serviceGroup->id . '/deallocate/' . $service->id);
+        $this->delete('/servicegroups/' . $serviceGroup->id . '/deallocate/' . $service->id);
 
         $this->assertNull($serviceGroup->services->first());
     }
@@ -89,7 +89,7 @@ class ServiceGroupTest extends TestCase
         $services = Service::factory()->count(2)->create();
 
         foreach($services as $service) {
-            $this->put('/servicegroups/' . $serviceGroup->id . '/allocate/' . $service->id);
+            $this->post('/servicegroups/' . $serviceGroup->id . '/allocate/' . $service->id);
         }
 
         $this->put('/servicegroups/' . $serviceGroup->id . '/resetstatus');

@@ -30,7 +30,7 @@ Route::put('/servicegroups/{serviceGroup}/resetstatus', 'ServiceGroupController@
 Route::get('/servicegroups', 'ServiceGroupController@index');
 Route::post('/servicegroups', 'ServiceGroupController@store');
 Route::post('/servicegroups/{serviceGroup}/allocate/{service}', 'ServiceGroupController@allocate');
-Route::post('/servicegroups/{serviceGroup}/deallocate/{service}', 'ServiceGroupController@deallocate');
+Route::delete('/servicegroups/{serviceGroup}/deallocate/{service}', 'ServiceGroupController@deallocate');
 Route::put('/servicegroups/{serviceGroup}', 'ServiceGroupController@update');
 Route::delete('/servicegroups/{serviceGroup}', 'ServiceGroupController@destroy');
 
@@ -45,3 +45,13 @@ Route::get('/responses', 'ResponseController@index');
 Route::post('/responses', 'ResponseController@store');
 Route::put('/responses/{response}', 'ResponseController@update');
 Route::delete('/responses/{response}', 'ResponseController@destroy');
+
+/** Event REST actions */
+Route::get('/events', 'EventController@index');
+Route::post('/events', 'EventController@store');
+Route::post('/events/{event}/allocateservice/{service}', 'EventController@allocateService');
+Route::delete('/events/{event}/deallocateservice/{service}', 'EventController@deallocateService');
+Route::post('/events/{event}/allocateservicegroup/{serviceGroup}', 'EventController@allocateServiceGroup');
+Route::delete('/events/{event}/deallocateservicegroup/{serviceGroup}', 'EventController@deallocateServiceGroup');
+Route::put('/events/{event}/resolve', 'EventController@resolve');
+Route::delete('/events/{event}', 'EventController@destroy');
