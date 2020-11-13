@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Status;
+use App\Models\Service;
 use App\Models\ServiceGroup;
 use Illuminate\Http\Request;
 
@@ -40,12 +42,12 @@ class ServiceGroupController extends Controller
         return redirect('/servicegroups/' . $serviceGroup->id);
     }
 
-    public function allocate(Request $request, ServiceGroup $serviceGroup) {
-        $serviceGroup->services()->attach($request->service);
+    public function allocate(ServiceGroup $serviceGroup, Service $service) {
+        $serviceGroup->services()->attach($service);
     }
 
-    public function deallocate(Request $request, ServiceGroup $serviceGroup) {
-        $serviceGroup->services()->detach($request->service);
+    public function deallocate(ServiceGroup $serviceGroup, Service $service) {
+        $serviceGroup->services()->detach($service);
     }
 
     /**
@@ -79,7 +81,12 @@ class ServiceGroupController extends Controller
      */
     public function update(Request $request, ServiceGroup $serviceGroup)
     {
-        //
+        $serviceGroup->name = $request->serviceGroup->name;
+        $serviceGroup->description = $request->serviceGroup->description;
+
+        $serviceGroup->save();
+
+        return redirect('/servicegroups/' . $serviceGroup->id);
     }
 
     /**
@@ -90,6 +97,24 @@ class ServiceGroupController extends Controller
      */
     public function destroy(ServiceGroup $serviceGroup)
     {
-        //
+        ServiceGroup::destroy($serviceGroup->id);
+
+        return redirect('/servicegroups');
+    }
+
+    public function setStatus(ServiceGroup $serviceGroup, Status $status) {
+        $services = $serviceGroup->services;
+        foreach($services as $service) {
+            $service->current_status_id = $status->id;
+            $service->save();
+        }
+    }
+
+    public function resetStatus(ServiceGroup $serviceGroup) {
+        $services = $serviceGroup->services;
+        foreach($services as $service) {
+            $service->current_status_id = $service->default_status_id;
+            $service->save();
+        }
     }
 }

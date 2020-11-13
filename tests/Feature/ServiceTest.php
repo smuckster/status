@@ -53,4 +53,25 @@ class ServiceTest extends TestCase
 
         $this->assertDatabaseMissing('services', $service->toArray());
     }
+
+    /** @test */
+    public function a_user_can_set_the_current_status_of_a_service() {
+        $service = Service::factory()->create();
+        $status = Status::factory()->create();
+
+        $this->put('/services/' . $service->id . '/setstatus/' . $status->id);
+        //dd([$statusBefore, $statusAfter, $status->id]);
+        $this->assertEquals($status->id, Service::find($service->id)->current_status_id);
+    }
+
+    /** @test */
+    public function a_user_can_reset_the_status_of_a_service() {
+        $service = Service::factory()->create();
+        $defaultStatus = $service->defaultStatus();
+        $currentStatus = $service->currentStatus();
+
+        $this->put('/services/' . $service->id . '/resetstatus');
+
+        $this->assertEquals($defaultStatus->id, Service::find($service->id)->defaultStatus()->id);
+    }
 }

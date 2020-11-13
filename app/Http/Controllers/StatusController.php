@@ -35,7 +35,9 @@ class StatusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $status = Status::create($request->all());
+
+        return redirect('/statuses/' . $status->id);
     }
 
     /**
@@ -69,7 +71,13 @@ class StatusController extends Controller
      */
     public function update(Request $request, Status $status)
     {
-        //
+        $status->name = $request->status->name;
+        $status->description = $request->status->description;
+        $status->color = $request->status->color;
+
+        $status->save();
+
+        return redirect('/statuses/' . $status->id);
     }
 
     /**
@@ -80,6 +88,8 @@ class StatusController extends Controller
      */
     public function destroy(Status $status)
     {
-        //
+        Status::destroy($status->id);
+
+        return redirect('/statuses');
     }
 }

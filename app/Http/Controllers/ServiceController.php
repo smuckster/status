@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Service;
+use App\Models\Status;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
@@ -95,5 +96,17 @@ class ServiceController extends Controller
         Service::destroy($service->id);
 
         return redirect('/services');
+    }
+
+    public function setStatus(Service $service, Status $status) {
+        $service->current_status_id = $status->id;
+
+        $service->save();
+    }
+
+    public function resetStatus(Service $service) {
+        $service->current_status_id = $service->default_status_id;
+
+        $service->save();
     }
 }

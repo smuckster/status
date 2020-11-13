@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use App\Models\Status;
 use App\Models\Service;
 use App\Models\ServiceGroup;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -27,7 +28,7 @@ class ServiceGroupTest extends TestCase
         $service = Service::factory()->create();
         $serviceGroup = ServiceGroup::factory()->create();
 
-        $this->post('servicegroups/' . $serviceGroup->id . '/allocate', ['service' => $service->id]);
+        $this->post('/servicegroups/' . $serviceGroup->id . '/allocate/' . $service->id);
 
         $this->assertInstanceOf(Service::class, $serviceGroup->services->first());
     }
@@ -37,8 +38,64 @@ class ServiceGroupTest extends TestCase
         $service = Service::factory()->create();
         $serviceGroup = ServiceGroup::factory()->create();
 
-        $this->post('servicegroups/' . $serviceGroup->id . '/deallocate', ['service' => $service->id]);
+        $this->post('/servicegroups/' . $serviceGroup->id . '/deallocate/' . $service->id);
 
         $this->assertNull($serviceGroup->services->first());
+    }
+
+    /** @test */
+    public function a_user_can_edit_a_service_group() {
+        $this->withoutExceptionHandling();
+
+        $serviceGroup = ServiceGroup::factory()->create();
+
+        $serviceGroup->name = 'New Service Group Name';
+        $serviceGroup->description = 'Now this description has been edited.';
+
+        $this->put('/servicegroups/' . $serviceGroup->id, ['serviceGroup' => $serviceGroup]);
+
+        $this->assertDatabaseHas('service_groups', ['name' => $serviceGroup->name, 'description' => $serviceGroup->description]);
+    }
+
+    /** @test */
+    public function a_user_can_delete_a_service_group() {
+        $serviceGroup = ServiceGroup::factory()->create();
+
+        $this->delete('/servicegroups/' . $serviceGroup->id, ['serviceGroup' => $serviceGroup]);
+
+        $this->assertDatabaseMissing('service_groups', ['name' => $serviceGroup->name, 'description' => $serviceGroup->description]);
+    }
+
+    /** @test */
+    public function a_user_can_set_the_current_status_of_a_service_group() {
+        $serviceGroup = ServiceGroup::factory()->create();
+        $services = Service::factory()->count(3)->create();
+        $status = Status::factory()->create();
+
+        foreach($services as $service) {
+            $this->post('/servicegroups/' . $serviceGroup->id . '/allocate/' . $service->id);
+        }
+
+        $this->put('/servicegroups/' . $serviceGroup->id . '/setstatus/' . $status->id);
+
+        foreach($services as $service) {
+            $this->assertEquals($status->id, Service::find($service->id)->current_status_id);
+        }
+    }
+
+    /** @test */
+    public function a_user_can_reset_the_status_of_a_service_group() {
+        $serviceGroup = ServiceGroup::factory()->create();
+        $services = Service::factory()->count(2)->create();
+
+        foreach($services as $service) {
+            $this->put('/servicegroups/' . $serviceGroup->id . '/allocate/' . $service->id);
+        }
+
+        $this->put('/servicegroups/' . $serviceGroup->id . '/resetstatus');
+
+        foreach($services as $service) {
+            $this->assertEquals(Service::find($service->id)->default_status, Service::find($service->id)->current_status);
+        }
     }
 }
