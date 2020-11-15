@@ -49,9 +49,19 @@ Route::delete('/responses/{response}', 'ResponseController@destroy');
 /** Event REST actions */
 Route::get('/events', 'EventController@index');
 Route::post('/events', 'EventController@store');
+Route::put('/events/{event}', 'EventController@update');
+Route::delete('/events/{event}', 'EventController@destroy');
+
+/** Add and remove services and service groups from events */
 Route::post('/events/{event}/allocateservice/{service}', 'EventController@allocateService');
 Route::delete('/events/{event}/deallocateservice/{service}', 'EventController@deallocateService');
 Route::post('/events/{event}/allocateservicegroup/{serviceGroup}', 'EventController@allocateServiceGroup');
 Route::delete('/events/{event}/deallocateservicegroup/{serviceGroup}', 'EventController@deallocateServiceGroup');
+
+/** Resolve events */
 Route::put('/events/{event}/resolve', 'EventController@resolve');
-Route::delete('/events/{event}', 'EventController@destroy');
+
+/** Add messages to events */
+Route::post('/events/{event}/messages', 'MessageController@store');
+Route::put('/messages/{message}', 'MessageController@update');
+Route::delete('/messages/{message}', 'MessageController@destroy');

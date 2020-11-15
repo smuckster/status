@@ -16,7 +16,7 @@ class ServiceGroup extends Model
     }
 
     public function resetStatus() {
-        $services = $this->services();
+        $services = $this->services;
         foreach($services as $service) {
             $service->resetStatus();
         }

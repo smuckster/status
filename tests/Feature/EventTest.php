@@ -27,6 +27,27 @@ class EventTest extends TestCase
     }
 
     /** @test */
+    public function a_user_can_edit_an_event() {
+        $event = Event::factory()->create();
+
+        $event->name = 'Edited event name';
+        
+        $this->put('/events/' . $event->id, $event->toArray());
+
+        $this->assertDatabaseHas('events', ['name' => $event->name]);
+    }
+
+    /** @test */
+    public function a_user_can_update_the_response_of_an_event() {
+        $event = Event::factory()->create();
+        $response = Response::factory()->create();
+
+        $event->updateResponse($response);
+
+        $this->assertEquals($response->id, Event::find($event->id)->current_response_id);
+    }
+
+    /** @test */
     public function a_user_can_add_a_service_to_an_event() {
         $this->withoutExceptionHandling();
         $event = Event::factory()->create();
@@ -97,9 +118,10 @@ class EventTest extends TestCase
 
         //\Illuminate\Support\Facades\Event::fake();
 
-        $event = Event::factory()->create();
-        $services = Service::factory()->count(2)->create();
-        $serviceGroup = ServiceGroup::factory()->create();
+        $event = Event::factory()
+            ->create()
+            ->withServices(2)
+            ->withServiceGroups(2);
 
         $this->put('/events/' . $event->id . '/resolve');
 
@@ -107,12 +129,14 @@ class EventTest extends TestCase
         $listener = new \App\Listeners\ResetServices();
         $listener->handle(new EventResolved($event));
 
-        foreach($services as $service) {
+        foreach($event->services as $service) {
             $this->assertEquals(Service::find($service->id)->defaultStatus()->id, Service::find($service->id)->currentStatus()->id);
         }
 
-        foreach($serviceGroup->services as $service) {
-            $this->assertEquals(Service::find($service->id)->defaultStatus()->id, Service::find($service->id)->currentStatus()->id);
+        foreach($event->serviceGroups as $serviceGroup) {
+            foreach($serviceGroup->services as $service) {
+                $this->assertEquals(Service::find($service->id)->defaultStatus()->id, Service::find($service->id)->currentStatus()->id);
+            }
         }
     }
 }

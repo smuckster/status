@@ -11,6 +11,7 @@ class Service extends Model
 
     protected $fillable = ['name', 'description', 'default_status_id', 'current_status_id'];
 
+    /** Eloquent relationships */
     public function currentStatus() {
         return Status::find($this->current_status_id);
     }
@@ -27,6 +28,7 @@ class Service extends Model
         return $this->belongsToMany(Event::class);
     }
 
+    /** Logic */
     public function resetStatus() {
         $this->current_status_id = $this->default_status_id;
         $this->save();

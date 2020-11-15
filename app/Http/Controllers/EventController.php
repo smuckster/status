@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Event;
+use App\Models\Message;
 use App\Models\Service;
 use App\Models\ServiceGroup;
 use Illuminate\Http\Request;
@@ -75,7 +76,10 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        //
+        $event->name = $request->name;
+        $event->description = $request->description;
+        
+        $event->save();
     }
 
     /**
@@ -90,26 +94,23 @@ class EventController extends Controller
     }
 
     public function resolve(Event $event) {
-        $event->resolved_at = now();
-
-        $event->save();
-
-        event(new EventResolved($event));
+        $event->resolve();
     }
 
     public function allocateService(Event $event, Service $service) {
-        $event->services()->attach($service);
+        $event->allocateService($service);
     }
 
     public function deallocateService(Event $event, Service $service) {
-        $event->services()->detach($service);
+        $event->deallocateService($service);
     }
 
     public function allocateServiceGroup(Event $event, ServiceGroup $serviceGroup) {
-        $event->serviceGroups()->attach($serviceGroup);
+        $event->allocateServiceGroup($serviceGroup);
     }
 
     public function deallocateServiceGroup(Event $event, ServiceGroup $serviceGroup) {
-        $event->serviceGroups()->detach($serviceGroup);
+        $event->deallocateServiceGroup($serviceGroup);
     }
+
 }
