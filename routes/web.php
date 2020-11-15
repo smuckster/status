@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/** Home page for end users */
+Route::get('/', 'HomeController@index');
+
 /** Service REST actions */
 Route::get('/services', 'ServiceController@index');
 Route::get('/services/{service}', 'ServiceController@show');
@@ -65,3 +68,8 @@ Route::put('/events/{event}/resolve', 'EventController@resolve');
 Route::post('/events/{event}/messages', 'MessageController@store');
 Route::put('/messages/{message}', 'MessageController@update');
 Route::delete('/messages/{message}', 'MessageController@destroy');
+
+/** Jetstream routes */
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
