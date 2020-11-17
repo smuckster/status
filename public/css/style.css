@@ -1,0 +1,310 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    color: #606060;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: 1000px;
+    margin: auto;
+    height: 100%;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.6em;
+}
+
+.header-color {
+    height: 186px;
+    width: 100%;
+    background-color: #05194a;
+    position: absolute;
+    z-index: -1;
+}
+
+footer {
+    background-color: #777777;
+    margin-top: auto;
+    display: none;
+}
+
+.button {
+    background-color: #2377d9;
+    color: #fff;
+    border-radius: 4px;
+    padding: .6em;
+    display: inline-block;
+    font-size: 20px;
+    margin-left: auto;
+}
+
+.summary-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    box-shadow: 0px 4px 4px rgba(0,0,0,0.25);
+    border-radius: 4px;
+    width: 100%;
+    padding: 1.6em 3em;
+    margin: 30px 0;
+}
+
+.summary-message {
+    background-color: #fc9331;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-align: left;
+    width: 100%;
+    font-size: 25px;
+}
+
+.service-group-container {
+    margin-bottom: 24px;
+    /*box-shadow: 0px 1px 4px rgba(0,0,0,0.1);*/
+}
+
+.service-group-container > div:first-child {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.service-group-container > div:last-child {
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.service-group-container > div:nth-child(2) {
+    /*margin-top: -1px !important;*/
+}
+
+.service-group-container .messages-container + .subservice {
+    border-top: 1px solid #e5e5e5;
+    margin-top: 20px;
+}
+
+.service-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 22px;
+    padding-right: 22px;
+    border: 1px solid #e5e5e5;
+    height: 60px;
+}
+
+.service {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 22px;
+    padding-right: 22px;
+    border: 1px solid #e5e5e5;
+    height: 60px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+    box-shadow: 0px 1px 4px rgba(0,0,0,0.1);
+    background-color: #fff;
+}
+
+.subservice {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 22px;
+    padding-right: 22px;
+    border: 1px solid #e5e5e5;
+    height: 50px;
+    margin-bottom: 0;
+    margin-top: -1px;
+    background-color: #fff;
+}
+
+.service-group-name,
+.service-name {
+    font-size: 25px;
+}
+
+.subservice-name {
+    font-size: 22px;
+}
+
+.messages-container {
+    width: 100%;
+    position: relative;
+}
+
+.timeline {
+    margin-top: -1px;
+    margin-bottom: -4px;
+    height: 120%;
+    width: 2px;
+    background-color: #e5e5e5;
+    position: absolute;
+    left: 74px;
+    top: -20px;
+    z-index: -1;
+}
+
+.message-container {
+    position: relative;
+    /*margin-left: -98px;*/
+    margin-left: 106px;
+    margin-top: 20px;
+    background-color: transparent;
+}
+
+.time {
+    font-size: 14px;
+    color: #606060;
+    width: 60px;
+    text-align: right;
+    margin-right: 6px;
+    position: absolute;
+    left: -104px;
+    top: 14px;
+}
+
+.response {
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    left: -39px;
+    top: 14px;
+    cursor: default;
+}
+
+.message-box {
+    border: 1px solid #c4c4c4;
+    border-radius: 4px;
+    padding: 14px 18px 8px;
+    display: inline-block;
+    display: block;
+}
+
+.message-title {
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.message-body {
+    color: #606060;
+    margin: 10px 0 6px;
+    font-size: 15px;
+}
+
+.message-event {
+    font-size: 14px;
+    text-align: right;
+}
+
+.message-new-incident {
+    font-size: 12px;
+    letter-spacing: 0.8px;
+    color: #606060;
+    margin-bottom: 4px;
+}
+
+/** Status colors **/
+
+.good {
+    color: #5bc159;
+}
+
+.warning {
+    color: #fc9331;
+}
+
+.danger {
+    color: #ef4a4a;
+}
+
+.good-bg {
+    background-color: #5bc159;
+}
+
+.warning-bg {
+    background-color: #fc9331;
+}
+
+.danger-bg {
+    background-color: #ef4a4a;
+}
+
+.good-border {
+    border-left: 52px solid #5bc159;
+}
+
+.warning-border {
+    border-left: 52px solid #fc9331;
+}
+
+.danger-border {
+    border-left: 52px solid #ef4a4a;
+}
+
+.good-border-small {
+    border-left: 6px solid #5bc159;
+}
+
+.warning-border-small {
+    border-left: 6px solid #fc9331;
+}
+
+.danger-border-small {
+    border-left: 6px solid #ef4a4a;
+}
+
+.status {
+    margin-left: auto;
+    font-size: 18px;
+}
+
+.event-list {
+    margin-top: 42px;
+    margin-bottom: 42px;
+}
+
+.past-events {
+    font-size: 30px;
+}
+
+.date {
+    font-size: 24px;
+    margin-top: 26px;
+    margin-bottom: 10px;
+}
+
+.date-message {
+    font-size: 18px;
+    color: #606060;
+    margin-left: 32px;
+}
+
+.event-list .timeline {
+    height: 100%;
+    top: 0;
+}
+
