@@ -17,6 +17,7 @@ class CreateServiceGroupsTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->integer('sort_order');
             $table->timestamps();
         });
     }

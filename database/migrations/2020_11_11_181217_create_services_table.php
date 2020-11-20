@@ -19,7 +19,7 @@ class CreateServicesTable extends Migration
             $table->text('description')->nullable();
             $table->foreignId('default_status_id');
             $table->foreignId('current_status_id');
-            $table->foreignId('service_group_id')->nullable();
+            $table->integer('sort_order');
             $table->timestamps();
         });
     }

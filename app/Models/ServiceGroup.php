@@ -9,7 +9,7 @@ class ServiceGroup extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['name', 'description', 'sort_order'];
 
     public function services() {
         return $this->belongsToMany(Service::class, 'service_group_assignments', 'service_group', 'service');

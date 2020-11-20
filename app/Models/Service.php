@@ -9,7 +9,7 @@ class Service extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'default_status_id', 'current_status_id'];
+    protected $fillable = ['name', 'description', 'default_status_id', 'current_status_id', 'sort_order'];
 
     /** Eloquent relationships */
     public function currentStatus() {

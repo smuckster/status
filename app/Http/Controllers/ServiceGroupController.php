@@ -37,7 +37,18 @@ class ServiceGroupController extends Controller
      */
     public function store(Request $request)
     {
-        $serviceGroup = ServiceGroup::create($request->all());
+        /** If there's no sort order attached, set it to the highest sort value */
+        if(empty($request->sort_order)) {
+            $highestSortOrder = ServiceGroup::orderBy('sort_order', 'desc')
+                ->first()
+                ->sort_order ?? 0;
+
+            $serviceGroup = ServiceGroup::make($request->all());
+            $serviceGroup->sort_order = $highestSortOrder + 1;
+            $serviceGroup->save();
+        } else {
+            $serviceGroup = ServiceGroup::create($request->all());
+        }
 
         return redirect('/servicegroups/' . $serviceGroup->id);
     }

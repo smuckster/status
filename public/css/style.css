@@ -48,13 +48,22 @@ footer {
 }
 
 .button {
-    background-color: #2377d9;
     color: #fff;
     border-radius: 4px;
     padding: .6em;
     display: inline-block;
     font-size: 20px;
     margin-left: auto;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.primary {
+    background-color: #2377d9;
+}
+
+.primary:hover {
+    background-color: #1c64b8;
 }
 
 .summary-container {
@@ -111,6 +120,7 @@ footer {
     padding-right: 22px;
     border: 1px solid #e5e5e5;
     height: 60px;
+    cursor: default;
 }
 
 .service {
@@ -125,6 +135,7 @@ footer {
     border-radius: 4px;
     box-shadow: 0px 1px 4px rgba(0,0,0,0.1);
     background-color: #fff;
+    cursor: default;
 }
 
 .subservice {
@@ -138,6 +149,7 @@ footer {
     margin-bottom: 0;
     margin-top: -1px;
     background-color: #fff;
+    cursor: default;
 }
 
 .service-group-name,
@@ -183,6 +195,7 @@ footer {
     position: absolute;
     left: -104px;
     top: 14px;
+    cursor: default;
 }
 
 .response {

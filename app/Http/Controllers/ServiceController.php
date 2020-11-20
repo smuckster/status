@@ -38,7 +38,18 @@ class ServiceController extends Controller
     {
         $request->validate(['name' => 'required']);
 
-        $service = Service::create($request->all());
+        /** If there's no sort order attached, set it to the highest sort value */
+        if(empty($request->sort_order)) {
+            $highestSortOrder = Service::orderBy('sort_order', 'desc')
+                ->first()
+                ->sort_order ?? 0;
+
+            $service = Service::make($request->all());
+            $service->sort_order = $highestSortOrder + 1;
+            $service->save();
+        } else {
+            $service = Service::create($request->all());
+        }
 
         return redirect('/services' . $service->id);
     }
@@ -78,7 +89,7 @@ class ServiceController extends Controller
         $service->description = $request->description;
         $service->default_status_id = $request->default_status_id;
         $service->current_status_id = $request->current_status_id;
-        $service->service_group_id = $request->service_group_id;
+        $service->sort_order = $request->sort_order;
 
         $service->save();
 

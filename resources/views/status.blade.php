@@ -11,13 +11,12 @@
             <img src="images/moonami_logo.png">
         </div>
 
-        <div class="button subscribe">Subscribe to updates</div>
+        <div class="button primary subscribe">Subscribe to updates</div>
     </header>
 
     <main>
-        <div class="summary-container">
-            <div class="summary-message">Moodle Workplace performance degraded</div>
-        </div>
+
+        <status-summary></status-summary>
 
         <div class="service-group-container">
             <div class="service-group warning-border">
@@ -74,6 +73,8 @@
             <p class="service-name">Email</p>
             <p class="status good">Operational</p>
         </div>
+
+        <service></service>
 
         <div class="service good-border">
             <p class="service-name">SFTP</p>

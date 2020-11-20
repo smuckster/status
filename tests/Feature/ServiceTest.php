@@ -14,6 +14,7 @@ class ServiceTest extends TestCase
 
     /** @test */
     public function a_user_can_create_a_service() {
+        $this->withoutExceptionHandling();
         $status = Status::factory()->create();
         $attributes = ['name' => 'Moodle',
                        'description' => 'This service is for all of our Moodle sites.',

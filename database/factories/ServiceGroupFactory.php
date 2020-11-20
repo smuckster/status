@@ -23,7 +23,8 @@ class ServiceGroupFactory extends Factory
     {
         return [
             'name' => ucfirst($this->faker->word),
-            'description' => $this->faker->sentence
+            'description' => $this->faker->sentence,
+            'sort_order' => (ServiceGroup::orderBy('sort_order', 'desc')->first()->sort_order ?? 0) + 1
         ];
     }
 }

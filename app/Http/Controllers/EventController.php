@@ -78,7 +78,7 @@ class EventController extends Controller
     {
         $event->name = $request->name;
         $event->description = $request->description;
-        
+
         $event->save();
     }
 
@@ -112,5 +112,4 @@ class EventController extends Controller
     public function deallocateServiceGroup(Event $event, ServiceGroup $serviceGroup) {
         $event->deallocateServiceGroup($serviceGroup);
     }
-
 }
