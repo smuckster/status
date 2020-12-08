@@ -21,4 +21,12 @@ class ServiceGroup extends Model
             $service->resetStatus();
         }
     }
+
+    public function allocateService(Service $service) {
+        $this->services()->attach($service);
+    }
+
+    public function deallocateService(Service $service) {
+        $this->services()->detach($service);
+    }
 }

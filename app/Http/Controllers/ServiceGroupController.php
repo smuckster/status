@@ -54,11 +54,13 @@ class ServiceGroupController extends Controller
     }
 
     public function allocate(ServiceGroup $serviceGroup, Service $service) {
-        $serviceGroup->services()->attach($service);
+        //$serviceGroup->services()->attach($service);
+        $serviceGroup->allocateService($service);
     }
 
     public function deallocate(ServiceGroup $serviceGroup, Service $service) {
-        $serviceGroup->services()->detach($service);
+        //$serviceGroup->services()->detach($service);
+        $serviceGroup->deallocateService($service);
     }
 
     /**

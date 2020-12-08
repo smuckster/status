@@ -33,4 +33,12 @@ class Service extends Model
         $this->current_status_id = $this->default_status_id;
         $this->save();
     }
+
+    public function allocateToGroup(ServiceGroup $serviceGroup) {
+        $serviceGroup->services()->attach($this);
+    }
+
+    public function deallocateFromGroup(ServiceGroup $serviceGroup) {
+        $serviceGroup->services()->detach($this);
+    }
 }

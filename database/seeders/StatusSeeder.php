@@ -16,7 +16,8 @@ class StatusSeeder extends Seeder
     {
         DB::table('statuses')->insert([
             'name' => 'Operational',
-            'color' => '#009933'
+            'color' => '#009933',
+            'isDefault' => 1
         ]);
 
         DB::table('statuses')->insert([

@@ -18,6 +18,7 @@ class CreateStatusesTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('color', 7);
+            $table->boolean('isDefault')->default(0);
             $table->timestamps();
         });
     }

@@ -18,9 +18,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/summary', function() {
-    return ['status' => 'Moodle Workplace performance is degraded.'];
-});
+Route::get('/summary', 'ApiController@summary');
 
 /** Service API routes */
-Route::get('/services', 'ServiceApiController@index');
+Route::get('/services', 'ApiController@services');
